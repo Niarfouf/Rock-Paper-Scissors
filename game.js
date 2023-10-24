@@ -36,14 +36,40 @@ function playRound(playerSelection, computerSelection) {
     let computerNumber = getNumberFromString(computerSelection)
     
     if (playerNumber - computerNumber === 0) {
-        return `Tie, ${playerSelection} ties with ${computerSelection}`
+        return 0
     } else if (playerNumber - computerNumber === - 1 || playerNumber - computerNumber === 2) {
-        return `You lose, ${playerSelection} loses versus ${computerSelection}`
+        return 1
     } else {
-        return `You win, ${playerSelection} wins versus ${computerSelection}`
+        return 2
     }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let playerSelection
+    while (playerScore < 3 && computerScore < 3) {
+        do {
+             playerSelection = prompt("Rock, paper or scissors?")
+        } while (!playerSelection)
+        
+        let computerSelection = getComputerChoice()
+        let roundResult = playRound(playerSelection, computerSelection)
+        if (roundResult === 0) {
+            console.log(`Tie, ${playerSelection} ties with ${computerSelection}`)
+        } else if (roundResult === 1) {
+            console.log(`You lose, ${playerSelection} loses versus ${computerSelection}`)
+            computerScore++
+        } else {
+            console.log(`You win, ${playerSelection} wins versus ${computerSelection}`)
+            playerScore++
+        }
+    }
+    if (playerScore === 3) {
+        return console.log(`You win ${playerScore} to ${computerScore} vs the computer`)
+    } else {
+        return console.log(`You lose ${playerScore} to ${computerScore} vs the computer`)
+    }  
+}
+
+game()
