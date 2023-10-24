@@ -15,6 +15,35 @@ function getComputerChoice() {
     }
     return computerChoice;
 }
+function getNumberFromString(choiceString) {
+    let choiceNumber;
+    switch (choiceString) {
+        case "rock":
+            choiceNumber = 1;
+            break;
+        case "paper":
+            choiceNumber = 2;
+            break;
+        case "scissors":
+            choiceNumber = 3;
+            break;
+    }
+    return choiceNumber;
+}
+function playRound(playerSelection, computerSelection) {
+    playerSelection = playerSelection.toLowerCase()
+    let playerNumber = getNumberFromString(playerSelection)
+    let computerNumber = getNumberFromString(computerSelection)
+    
+    if (playerNumber - computerNumber === 0) {
+        return `Tie, ${playerSelection} ties with ${computerSelection}`
+    } else if (playerNumber - computerNumber === - 1 || playerNumber - computerNumber === 2) {
+        return `You lose, ${playerSelection} loses versus ${computerSelection}`
+    } else {
+        return `You win, ${playerSelection} wins versus ${computerSelection}`
+    }
+}
 
-
-console.log(getComputerChoice())
+const playerSelection = "rock";
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection));
