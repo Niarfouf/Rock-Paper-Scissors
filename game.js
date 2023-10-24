@@ -15,6 +15,7 @@ function getComputerChoice() {
     }
     return computerChoice;
 }
+//A function that returns a number from a string (1, 2, 3 / rock, paper, scissors)
 function getNumberFromString(choiceString) {
     let choiceNumber;
     switch (choiceString) {
@@ -30,6 +31,8 @@ function getNumberFromString(choiceString) {
     }
     return choiceNumber;
 }
+
+//A function that simulates a round and returns 0 for a tie, 1 for a lose and 2 for a win
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase()
     let playerNumber = getNumberFromString(playerSelection)
@@ -44,6 +47,7 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+//A function that simulates a 5 round game and returns the winner
 function game() {
     let playerScore = 0;
     let computerScore = 0;
