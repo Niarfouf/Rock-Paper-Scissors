@@ -1,4 +1,3 @@
-//A function that randomly return rock, paper or scissors (it simulates the player's opponent)
 function getComputerChoice() {
     let computerChoice;
     let randomNumber = Math.floor(Math.random() * (3 - 1 + 1) + 1)
@@ -15,7 +14,7 @@ function getComputerChoice() {
     }
     return computerChoice;
 }
-//A function that returns a number from a string (1, 2, 3 / rock, paper, scissors)
+
 function getNumberFromString(choiceString) {
     let choiceNumber;
     switch (choiceString) {
@@ -32,7 +31,6 @@ function getNumberFromString(choiceString) {
     return choiceNumber;
 }
 
-//A function that simulates a round and returns 0 for a tie, 1 for a lose and 2 for a win
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase()
     let playerNumber = getNumberFromString(playerSelection)
@@ -47,33 +45,65 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-//A function that simulates a 5 round game and returns the winner
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    let playerSelection
-    while (playerScore < 3 && computerScore < 3) {
-        do {
-             playerSelection = prompt("Rock, paper or scissors?")
-        } while (!playerSelection)
+const body = document.querySelector(".container")
+const icons = document.querySelector(".icons")
+const icon = document.querySelectorAll(".icon")
+const logo = document.querySelector("#logo")
+const buttons = document.querySelectorAll("button")
+const resultDiv = document.querySelector("#result-div")
+const playerScoreDiv = document.createElement("div")
+const computerScoreDiv = document.createElement("div")
+const playAgain = document.createElement("button")
+playAgain.classList.add("again")
+playAgain.textContent = "Play again?"
+playerScoreDiv.classList.add("score")
+computerScoreDiv.classList.add("score")
+let playerScore = 0;
+let computerScore = 0;
+
+
+playAgain.addEventListener("click", function() {
+    document.location.href = 'index.html';
+})
+buttons.forEach(button => {
+    button.addEventListener("click", function() {
+        let score = document.querySelectorAll(".score")
+        if (score.length === 0) {
+            icons.insertBefore(playerScoreDiv, icon[0])
+            icons.appendChild(computerScoreDiv)
+            
+        }
         
+        let playerSelection = button.value
         let computerSelection = getComputerChoice()
+        
         let roundResult = playRound(playerSelection, computerSelection)
+        
         if (roundResult === 0) {
-            console.log(`Tie, ${playerSelection} ties with ${computerSelection}`)
+            resultDiv.textContent = `Tie, ${playerSelection} ties with ${computerSelection}`
         } else if (roundResult === 1) {
-            console.log(`You lose, ${playerSelection} loses versus ${computerSelection}`)
+            resultDiv.textContent = `You lose, ${playerSelection} loses versus ${computerSelection}`
             computerScore++
         } else {
-            console.log(`You win, ${playerSelection} wins versus ${computerSelection}`)
+            resultDiv.textContent = `You win, ${playerSelection} wins versus ${computerSelection}`
             playerScore++
         }
-    }
-    if (playerScore === 3) {
-        return console.log(`You win ${playerScore} to ${computerScore} vs the computer`)
-    } else {
-        return console.log(`You lose ${playerScore} to ${computerScore} vs the computer`)
-    }  
-}
-
-game()
+        playerScoreDiv.textContent = `Player: ${playerScore}`
+        computerScoreDiv.textContent = `Computer: ${computerScore}`
+        if (computerScore === 5) {
+            resultDiv.textContent = `You lose the game, final score is ${playerScore} for you and ${computerScore} for the computer, try again!`
+            icon.forEach(e => {
+                icons.removeChild(e)
+            })
+            icons.insertBefore(playAgain, computerScoreDiv)
+        } else if (playerScore === 5 ) {
+            resultDiv.textContent = `You win the game, final score is ${playerScore} for you and ${computerScore} for the computer, good job!`
+            icon.forEach(e => {
+                icons.removeChild(e)
+            })
+            icons.insertBefore(playAgain, computerScoreDiv)
+        }
+        
+        
+        })  
+})
